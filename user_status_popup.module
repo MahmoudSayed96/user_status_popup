@@ -1,0 +1,64 @@
+<?php
+
+/**
+ * @file
+ */
+
+use Drupal\Core\Url;
+
+/**
+ * Implements hook_form_FORM_ID_alter().
+ */
+function user_status_popup_form_user_form_alter(&$form, $form_state) {
+  if ($form['#form_id'] != 'user_register_form') {
+    // Get user entity.
+    $form_object = $form_state->getFormObject();
+    $user_entity = $form_object->getEntity();
+
+    // Check if current user have administer user permission.
+    $user = \Drupal::currentUser();
+    $cr_user_access = $user->hasPermission('administer users');
+
+    if ($cr_user_access) {
+      // Create a custom status field.
+      // Hide core user status field.
+      $user_role = '';
+      if (!empty($form['account']['status']['#suffix'])) {
+        $user_role = $form['account']['status']['#suffix'];
+      }
+      $form['account']['status']['#access'] = FALSE;
+
+      // Check if user blocked or not.
+      if ($user_entity->isBlocked()) {
+        $form['account']['user_status_popup']['active'] = [
+          '#type'   => 'link',
+          '#title'  => t('Activate'),
+          '#url' => Url::fromRoute('nwc_user_status.user_active', ['user' => $user_entity->id()]),
+          '#prefix' => '<div class="block-action"><div class="label">'.t('Status:').' <b>'.t('Blocked').'</b></div></div>',
+          '#suffix' => $user_role,
+          '#attributes' => [
+            'id' => ['active-user-action'],
+            'class' => ['button button--primary use-ajax'],
+            'data-dialog-type' => 'modal',
+            'data-dialog-options' => '{"width":600,"draggable":false,"autoResize":true}',
+          ],
+        ];
+      } else {
+        $form['account']['user_status_popup']['block'] = [
+          '#type'   => 'link',
+          '#title'  => t('Block'),
+          '#url' => Url::fromRoute('nwc_user_status.user_block', ['user' => $user_entity->id()]),
+          '#prefix' => '<div class="block-action"><div class="label">'.t('Status:').' <b>'.t('Activated').'</b></div></div>',
+          '#suffix' => $user_role,
+          '#attributes' => [
+            'id' => ['block-user-action'],
+            'class' => ['button button--danger use-ajax'],
+            'data-dialog-type' => 'modal',
+            'data-dialog-options' => '{"width":600,"draggable":false,"autoResize":true}',
+          ],
+        ];
+      }
+    }
+  }
+}
+

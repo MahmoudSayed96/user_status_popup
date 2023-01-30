@@ -1,0 +1,22 @@
+nwc_user_status.user_block:
+  path: '/admin/user/{user}/status/block'
+  defaults:
+    _form: '\Drupal\user_status_popup\Form\UserStatusBlockForm'
+    _title: 'Block user'
+  requirements:
+     _permission: 'administer users'
+  options:
+    parameters:
+      user:
+        type: entity:user
+nwc_user_status.user_active:
+  path: '/admin/user/{user}/status/active'
+  defaults:
+    _form: '\Drupal\user_status_popup\Form\UserStatusActiveForm'
+    _title: 'Active user'
+  requirements:
+    _permission: 'administer users'
+  options:
+    parameters:
+      user:
+        type: entity:user
