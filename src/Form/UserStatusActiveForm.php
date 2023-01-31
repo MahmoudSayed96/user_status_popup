@@ -55,7 +55,7 @@ class UserStatusActiveForm extends ConfirmFormBase
         $form_state->setRedirectUrl(new Url('entity.user.edit_form', ['user' => $this->user_id]));
 
         // Set confirmation alert.
-        \Drupal::messenger()->addMessage(t('The user has been activated successfully.'));
+        \Drupal::messenger()->addMessage($this->t('The user has been activated successfully.'));
     }
 
     /**
