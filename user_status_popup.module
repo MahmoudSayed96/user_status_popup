@@ -5,6 +5,21 @@
  */
 
 use Drupal\Core\Url;
+use Drupal\Core\Routing\RouteMatchInterface;
+
+ /**
+ * Implements hook_help().
+ */
+function user_status_popup_help($route_name, RouteMatchInterface $route_match) {
+  switch ($route_name) {
+    // Main module help for the user_status_popup module.
+    case 'help.page.user_status_popup':
+      $output = '';
+      $output .= '<h3>' . t('About') . '</h3>';
+      $output .= '<p>' . t('This module show user form status as button and fire popup confirm form') . '</p>';
+      return $output;
+  }
+}
 
 /**
  * Implements hook_form_FORM_ID_alter().
