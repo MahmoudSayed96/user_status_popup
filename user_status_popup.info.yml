@@ -1,5 +1,5 @@
 name: 'User Status Popup'
 type: module
 description: 'Show user form status as button and fire popup confirm form'
-core_version_requirement: ^9 || ^10
+core_version_requirement: ^8 || ^9 || ^10
 package: 'Other'
