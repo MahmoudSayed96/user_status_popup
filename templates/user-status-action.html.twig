@@ -1,0 +1,15 @@
+{#
+/**
+* varaiables:
+*   - status: value of user stats [0 => Block , 1 => Active].
+*/
+#}
+<div class="user-status-action" style="display: flex; align-items: center; justify-content: center;">
+  {% if status == '1' or status == 1 %}
+    <a class="button button--danger button--small use-ajax" href="{{ reject_url }}"
+       data-dialog-type="modal" data-dialog-options='{"width":600,"draggable":false,"autoResize":true}'>{{ 'Block'|t }}</a>
+  {% else %}
+    <a class="button button--success button--small use-ajax" href="{{ approve_url }}"
+       data-dialog-type="modal" data-dialog-options='{"width":600,"draggable":false,"autoResize":true}'>{{ 'Active'|t }}</a>
+  {% endif %}
+</div>

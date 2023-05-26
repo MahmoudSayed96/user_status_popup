@@ -31,11 +31,11 @@ function user_status_popup_form_user_form_alter(&$form, $form_state) {
     $form_object = $form_state->getFormObject();
     $user_entity = $form_object->getEntity();
 
-    // Check if current user have administer user permission.
+    // Check if current user have administered user permission.
     $user = \Drupal::currentUser();
-    $cr_user_access = $user->hasPermission('administer users');
+    $current_user_access = $user->hasPermission('administer users');
 
-    if ($cr_user_access) {
+    if ($current_user_access) {
       // Create a custom status field.
       // Hide core user status field.
       $user_role = '';
@@ -77,4 +77,39 @@ function user_status_popup_form_user_form_alter(&$form, $form_state) {
       }
     }
   }
+}
+
+/**
+ * Implements hook_theme().
+ */
+function user_status_popup_theme($existing, $type, $theme, $path) {
+  return [
+    'user_status_action' => [
+      'template' => 'user-status-action',
+      'variables' => [
+        'status' => NULL,
+        'approve_url' => '#',
+        'reject_url' => '#',
+      ],
+    ],
+  ];
+}
+
+/**
+ * Implements hook_views_data().
+ */
+function user_status_popup_views_data() {
+  $data['views']['table']['group'] = t('User');
+  $data['views']['table']['join'] = [
+    // #global is a special flag which allows a table to appear all the time.
+    '#global' => [],
+  ];
+  $data['views']['user_status_action_views_field'] = [
+    'title' => t('User Status Action'),
+    'help' => t('This field for add custom buttons for change user status.'),
+    'field' => [
+      'id' => 'user_status_action_views_field',
+    ],
+  ];
+  return $data;
 }

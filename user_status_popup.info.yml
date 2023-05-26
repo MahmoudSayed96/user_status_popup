@@ -2,4 +2,11 @@ name: 'User Status Popup'
 type: module
 description: 'Show user form status as button and fire popup confirm form'
 core_version_requirement: ^8 || ^9 || ^10
-package: 'Other'
+package: 'User'
+dependencies:
+  - drupal:user
+
+# Information added by Drupal.org packaging script on 2023-01-30
+version: '8.x-1.0'
+project: 'user_status_popup'
+datestamp: 1675036800
